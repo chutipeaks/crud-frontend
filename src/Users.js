@@ -17,7 +17,7 @@ const Users = () => {
 
   const getUsers = async () => {
     try {
-      const response = await Axios.get(process.env.REACT_APP_ENDPOINT+'/api/users');
+      const response = await Axios.get(process.env.REACT_APP_ENDPOINT+'api/users');
       const userData = response.data || [];
       setUsers(userData);
       setError(null); // Clear the error if the request is successful
