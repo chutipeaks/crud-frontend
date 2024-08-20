@@ -17,7 +17,7 @@ const Users = () => {
 
   const getUsers = async () => {
     try {
-      const response = await Axios.get('http://localhost:3001/api/users');
+      const response = await Axios.get(process.env.REACT_APP_ENDPOINT+'/api/users');
       const userData = response.data || [];
       setUsers(userData);
       setError(null); // Clear the error if the request is successful
@@ -34,7 +34,7 @@ const Users = () => {
     };
 
     try {
-      await Axios.post('http://localhost:3001/api/createuser', payload);
+      await Axios.post(process.env.REACT_APP_ENDPOINT+'api/createuser', payload);
       setIsEditing(false); // Ensure edit mode is off after adding
       setSubmitted(!submitted); // Trigger re-fetching of users
     } catch (error) {
@@ -48,9 +48,9 @@ const Users = () => {
       id: data.id,
       name: data.name,
     };
-
+  
     try {
-      await Axios.post(`http://localhost:3001/api/updateuser`, payload);
+      await Axios.post(`${process.env.REACT_APP_ENDPOINT}api/updateuser`, payload);
       setSubmitted(!submitted); // Trigger re-fetching of users
       setIsEditing(false); // Ensure edit mode is off after updating
       setSelectedUser({}); // Clear the selected user
@@ -59,12 +59,13 @@ const Users = () => {
       setError("Failed to update user.");
     }
   };
+  
 
   const deleteUser = async (data) => {
     const payload = { id: data.id }; // Creating the payload with the user ID
 
     try {
-      await Axios.post('http://localhost:3001/api/deleteuser', payload);
+      await Axios.post(process.env.REACT_APP_ENDPOINT+'api/deleteuser', payload);
      getUsers(); // Re-fetch the users list after deletion
     } catch (error) {
       console.error("Axios Error: ", error);
